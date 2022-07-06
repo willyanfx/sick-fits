@@ -12,14 +12,14 @@ const GlobalStyles = createGlobalStyle`
 
   html {
     box-sizing: border-box;
-
+    font-size: 10px;
   }
 
   *, *::before, *:after {
     box-sizing: inherit;
   }
   
-  root {
+  html {
     --red: #ff0000;
     --black: #3939339;
     --grey: #3a3a3a;
