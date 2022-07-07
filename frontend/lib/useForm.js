@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function useForm(initial = {}) {
-  const [input, setInput] = useState(initial);
+  const [inputs, setInput] = useState(initial);
 
   function handleChange(e) {
     let { value, name, type } = e.target;
@@ -15,7 +15,7 @@ export default function useForm(initial = {}) {
     }
 
     setInput({
-      ...input,
+      ...inputs,
       [name]: value,
     });
   }
@@ -25,9 +25,9 @@ export default function useForm(initial = {}) {
   }
 
   function clearForm() {
-    const blankState = Object.entries(input).map(([key, value]) => [key, '']);
+    const blankState = Object.entries(inputs).map(([key, value]) => [key, '']);
     setInput(Object.fromEntries(blankState));
   }
 
-  return { input, handleChange, resetForm, clearForm };
+  return { inputs, handleChange, resetForm, clearForm };
 }
