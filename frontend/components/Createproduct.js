@@ -1,26 +1,61 @@
+import { useMutation } from '@apollo/client';
+import gql from 'graphql-tag';
 import useForm from '../lib/useForm';
 import Form from './styles/Form';
+import ErrorMessage from './ErrorMessage';
+
+const CREATE_PRODUCT_MUTATION = gql`
+  mutation CREATE_PRODUCT_MUTATION(
+    # variables passed and types
+    $name: String!
+    $description: String!
+    $price: Int!
+    $image: Upload
+  ) {
+    createProduct(
+      data: {
+        name: $name
+        description: $description
+        price: $price
+        status: "AVAILABLE"
+        photo: { create: { image: $image, altText: $name } }
+      }
+    ) {
+      id
+      name
+      price
+      description
+    }
+  }
+`;
 
 export default function CreateProduct() {
-  const { input, handleChange, resetForm, clearForm } = useForm({});
-  const handleSubmit = (e) => {
+  const { inputs, handleChange, resetForm, clearForm } = useForm({});
+
+  const [createProduct, { loading, error, data }] = useMutation(
+    CREATE_PRODUCT_MUTATION,
+    {
+      variables: inputs,
+    }
+  );
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(input);
+    await createProduct();
+    clearForm();
   };
 
   return (
     <Form onSubmit={handleSubmit}>
-      <fieldset
-      // aria-busy
-      // disabled={false}
-      >
+      <ErrorMessage error={error} />
+      <fieldset aria-busy={loading} disabled={loading}>
         <label htmlFor="file">
           Image
           <input
             type="file"
             id="image"
             name="image"
-            value={input.file}
+            value={inputs.file}
             onChange={handleChange}
             required
           />
@@ -32,7 +67,7 @@ export default function CreateProduct() {
             id="name"
             name="name"
             placeholder="name"
-            value={input.name}
+            value={inputs.name}
             onChange={handleChange}
             required
           />
@@ -44,7 +79,7 @@ export default function CreateProduct() {
             id="price"
             name="price"
             placeholder="price"
-            value={input.price}
+            value={inputs.price}
             onChange={handleChange}
           />
         </label>
@@ -54,7 +89,7 @@ export default function CreateProduct() {
             id="description"
             name="description"
             placeholder="description"
-            value={input.description}
+            value={inputs.description}
             onChange={handleChange}
           />
         </label>
