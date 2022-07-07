@@ -29,7 +29,8 @@ const { withAuth } = createAuth({
 
 export default withAuth(
   config({
-    serve: {
+    // @ts-ignore
+    server: {
       cors: {
         origin: [process.env.FRONTEND_URL],
         credentials: true,
@@ -50,11 +51,7 @@ export default withAuth(
       ProductImage,
     }),
     ui: {
-      isAccessAllowed: async ({ session }) => {
-        console.log(session);
-
-        return !!session?.data;
-      },
+      isAccessAllowed: async ({ session }) => !!session?.data,
     },
     session: withItemData(statelessSessions(sessionConfig), {
       User: 'id',
