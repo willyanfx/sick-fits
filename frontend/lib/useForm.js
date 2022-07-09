@@ -1,7 +1,13 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function useForm(initial = {}) {
-  const [inputs, setInput] = useState(initial);
+  const [inputs, setInputs] = useState(initial);
+  const initialValues = Object.values(initial).join('');
+
+  useEffect(() => {
+    // This function runs when the things we are watching change
+    setInputs(initial);
+  }, [initialValues]);
 
   function handleChange(e) {
     let { value, name, type } = e.target;
@@ -14,19 +20,19 @@ export default function useForm(initial = {}) {
       [value] = e.target.files;
     }
 
-    setInput({
+    setInputs({
       ...inputs,
       [name]: value,
     });
   }
 
   function resetForm() {
-    setInput(initial);
+    setInputs(initial);
   }
 
   function clearForm() {
     const blankState = Object.entries(inputs).map(([key, value]) => [key, '']);
-    setInput(Object.fromEntries(blankState));
+    setInputs(Object.fromEntries(blankState));
   }
 
   return { inputs, handleChange, resetForm, clearForm };
