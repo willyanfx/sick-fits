@@ -39,9 +39,7 @@ export default function SignUp() {
   console.log(data?.authenticateUserWithPassword?.message);
 
   const signed = data?.createUser && (
-    <p>
-      Signed up with ${data?.createUser.email} - Please Go Ahead and Sign In
-    </p>
+    <p>Signed up with {data?.createUser.email} - Please Go Ahead and Sign In</p>
   );
   return (
     <Form method="POST" onSubmit={handleSubmit}>
