@@ -35,9 +35,7 @@ export default function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     const res = await signin();
-    console.log('RESULT::: ', res);
   };
   console.log(data?.authenticateUserWithPassword?.message);
 
