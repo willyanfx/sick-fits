@@ -12,7 +12,6 @@ export default function Product({ product }) {
       <img
         src={product?.photo?.image?.publicUrlTransformed}
         alt={product.name}
-        srcSet=""
       />
       <Title>
         <Link href={`/product/${product.id}`}>{product.name}</Link>
@@ -22,13 +21,13 @@ export default function Product({ product }) {
       <div className="buttonList">
         <Link
           href={{
-            pathname: 'update',
+            pathname: '/update',
             query: {
               id: product.id,
             },
           }}
         >
-          Edit
+          Edit ✏️
         </Link>
         <AddToCart id={product.id} />
         <DeleteProduct id={product.id}>Delete</DeleteProduct>
