@@ -11,6 +11,8 @@ const DELETE_PRODUCT_MUTATION = gql`
 `;
 
 function update(cache, payload) {
+  console.log(payload);
+  console.log('running the update function after delete');
   cache.evict(cache.identify(payload.data.deleteProduct));
 }
 
@@ -18,9 +20,7 @@ export default function DeleteProduct({ id, children }) {
   const [deleteProduct, { loading, error }] = useMutation(
     DELETE_PRODUCT_MUTATION,
     {
-      variables: {
-        id,
-      },
+      variables: { id },
       update,
     }
   );
@@ -29,8 +29,8 @@ export default function DeleteProduct({ id, children }) {
       type="button"
       disabled={loading}
       onClick={() => {
-        // eslint-disable-next-line no-restricted-globals
         if (confirm('Are you sure you want to delete this item?')) {
+          // go ahead and delete it
           console.log('delete');
           deleteProduct().catch((err) => alert(err.message));
         }
