@@ -31,15 +31,12 @@ export default function SignUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
     const res = await signup();
-    console.log('RESULT::: ', res);
     resetForm();
   };
-  console.log(data?.authenticateUserWithPassword?.message);
 
   const signed = data?.createUser && (
-    <p>Signed up with {data?.createUser.email} - Please Go Ahead and Sign In</p>
+    <p>Signed up with {data?.createUser.email} - Please Go Head and Sign in!</p>
   );
   return (
     <Form method="POST" onSubmit={handleSubmit}>
@@ -80,7 +77,7 @@ export default function SignUp() {
             onChange={handleChange}
           />
         </label>
-        <button type="submit">Sign In</button>
+        <button type="submit">Sign Up!</button>
       </fieldset>
     </Form>
   );
