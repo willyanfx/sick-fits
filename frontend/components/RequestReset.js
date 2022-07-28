@@ -24,12 +24,10 @@ export default function RequestReset() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-    const res = await signup();
-    console.log('RESULT::: ', res);
+
+    await signup();
     resetForm();
   };
-  console.log(data?.authenticateUserWithPassword?.message);
 
   const resetedLink = data?.sendUserPasswordResetLink === null && (
     <p>Success! check your email for a link</p>
